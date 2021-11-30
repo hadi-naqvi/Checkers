@@ -7,6 +7,6 @@ The program structure operates under a facade design pattern.
 This program was developed for an ICS4U assignment.
 
 Credits:
-Hadi Naqvi
-Arjun Menon
+Hadi Naqvi, 
+Arjun Menon, and
 Andrew Kwok
