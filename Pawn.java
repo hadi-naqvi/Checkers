@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
- * [ICS4U] Checkers | Pawn.java 
+ * [ICS4U] Checkers | Pawn.java
  * Date: December 2nd, 2021
  * @author Hadi Naqvi
  * Teacher: Mr. Ho
@@ -13,7 +16,7 @@ public class Pawn extends Piece {
      * @param marker The marker when the Pawn is initialized
      */
     public Pawn(int row, int col, String marker) {
-         super(row, col, marker);
+        super(row, col, marker);
     }
 
     /**
@@ -22,9 +25,29 @@ public class Pawn extends Piece {
      * @return The list of possible moves that can be made
      */
     @Override
-    public ArrayList<ArrayList<Integer>> getPossibleMoves(Piece[][] board) {
-        ArrayList<ArrayList<Integer>> possibleMoves = new ArrayList<ArrayList<Integer>>();
+    public ArrayList<int[]> getPossibleMoves(Piece[][] board) {
+        ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
+        int[][] moveLocations;
 
+        if(this.marker.equals("\u001B[31mO\u001B[0m")){
+            moveLocations = new int[][]{{-1, -1}, {-1, 1}};
+        } else {
+            moveLocations = new int[][]{{1, 1}, {1, -1}};
+        }
+
+        for (int[] coordinates: moveLocations) {
+            if (this.row + coordinates[0] <= 7 && row + coordinates[0] >=0 && col + coordinates[1] <=7 && coordinates[1] >=0){
+                    possibleMoves.add(coordinates);
+            }
+        }
+        /*
+        for (int[] coordinates: moveLocations) {
+            if (row + coordinates[0] <= 7 && row + coordinates[0] >=0 && col + coordinates[1] <=7 && coordinates[1] >=0){
+                if (board[row + coordinates[0]][col + coordinates[1]] == null){
+                    possibleMoves.add(coordinates);
+                }
+            }
+        }*/
         return possibleMoves;
     }
 
@@ -34,9 +57,30 @@ public class Pawn extends Piece {
      * @return The list of possible jumps that can be made
      */
     @Override
-    public ArrayList<ArrayList<Integer>> getPossibleJumps(Piece[][] board) {
-        ArrayList<ArrayList<Integer>> possibleJumps = new ArrayList<ArrayList<Integer>>();
+    public ArrayList<int[]> getPossibleJumps(Piece[][] board) {
+        ArrayList<int[]> possibleJumps = new ArrayList<int[]>();
+        int[][] moveLocations;
 
+        if(this.marker.equals("\u001B[31mO\u001B[0m")){
+            moveLocations = new int[][]{{-2, -2}, {-2, 2}};
+        } else {
+            moveLocations = new int[][]{{2, 2}, {2, -2}};
+        }
+
+        for (int[] coordinates: moveLocations) {
+            if (row + coordinates[0] <= 7 && row + coordinates[0] >=0 && col + coordinates[1] <=7 && coordinates[1] >=0){
+                    possibleJumps.add(coordinates);
+            }
+        }
+
+        /*
+        for (int[] coordinates: moveLocations) {
+            if (row + coordinates[0] <= 7 && row + coordinates[0] >=0 && col + coordinates[1] <=7 && coordinates[1] >=0){
+                if (board[row + coordinates[0]][col + coordinates[1]] == null){
+                    possibleJumps.add(coordinates);
+                }
+            }
+        }*/
         return possibleJumps;
     }
 }
