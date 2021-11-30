@@ -83,5 +83,5 @@ public abstract class Piece {
      * This abstract method determines all possible jumps that can be made for a piece
      * @return The list of possible jumps that can be made
      */
-    public abstract ArrayList<int[]> getPossibleJumps();
+    public abstract ArrayList<int[][]> getPossibleJumps();
 }

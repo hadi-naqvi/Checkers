@@ -34,8 +34,10 @@ public class Pawn extends Piece {
         }
 
         for (int[] coordinates: moveLocations) {
-            if (this.row + coordinates[0] <= 7 && row + coordinates[0] >=0 && col + coordinates[1] <=7 && coordinates[1] >=0){
-                    possibleMoves.add(coordinates);
+            if (this.row + coordinates[0] <= 7 && this.row + coordinates[0] >=0 && this.col + coordinates[1] <=7 && this.col + coordinates[1] >=0){
+                coordinates[0] += this.row;
+                coordinates[1] += this.col;
+                possibleMoves.add(coordinates);
             }
         }
         /*
@@ -54,18 +56,18 @@ public class Pawn extends Piece {
      * @return The list of possible jumps that can be made
      */
     @Override
-    public ArrayList<int[]> getPossibleJumps() {
-        ArrayList<int[]> possibleJumps = new ArrayList<int[]>();
-        int[][] moveLocations;
+    public ArrayList<int[][]> getPossibleJumps() {
+        ArrayList<int[][]> possibleJumps = new ArrayList<int[][]>();
+        int[][][] moveLocations;
 
         if(this.marker.equals("\u001B[31mO\u001B[0m")){
-            moveLocations = new int[][]{{-2, -2}, {-2, 2}};
+            moveLocations = new int[][][]{{{-2, -2}, {-1, -1}}, {{-2, 2}, {-1, 1}}};
         } else {
-            moveLocations = new int[][]{{2, 2}, {2, -2}};
+            moveLocations = new int[][][]{{{2, 2}, {1,1}}, {{2, -2}, {1, -1}}};
         }
 
-        for (int[] coordinates: moveLocations) {
-            if (row + coordinates[0] <= 7 && row + coordinates[0] >=0 && col + coordinates[1] <=7 && coordinates[1] >=0){
+        for (int[][] coordinates: moveLocations) {
+            if (this.row + coordinates[0][0] <= 7 && this.row + coordinates[0][0] >=0 && this.col + coordinates[0][1] <=7 && this.col + coordinates[0][1] >=0){
                     possibleJumps.add(coordinates);
             }
         }
