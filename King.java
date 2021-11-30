@@ -27,4 +27,16 @@ public class King extends Piece {
 
         return possibleMoves;
     }
+
+    /**
+     * This method returns a 2D arraylist containing the coordinates of all the possible jumps that the King can make
+     * @param board The 2D array which stores the pieces on the checkerboard
+     * @return The list of possible jumps that can be made
+     */
+    @Override
+    public ArrayList<ArrayList<Integer>> getPossibleJumps(Piece[][] board) {
+        ArrayList<ArrayList<Integer>> possibleJumps = new ArrayList<ArrayList<Integer>>();
+
+        return possibleJumps;
+    }
 }

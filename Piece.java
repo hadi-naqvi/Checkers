@@ -1,5 +1,5 @@
 /**
- * [ICS4U] Checkers | Board.java 
+ * [ICS4U] Checkers | Piece.java 
  * Date: December 2nd, 2021
  * @author Hadi Naqvi
  * Teacher: Mr. Ho
@@ -78,4 +78,10 @@ public abstract class Piece {
      * @return The list of possible moves that can be made
      */
     public abstract ArrayList<ArrayList<Integer>> getPossibleMoves();
+    
+    /**
+     * This abstract method determines all possible jumps that can be made for a piece
+     * @return The list of possible jumps that can be made
+     */
+    public abstract ArrayList<ArrayList<Integer>> getPossibleJumps();
 }
