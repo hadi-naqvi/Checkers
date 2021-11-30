@@ -21,11 +21,10 @@ public class Pawn extends Piece {
 
     /**
      * This method returns a 2D arraylist containing the coordinates of all the possible moves that the Pawn can make
-     * @param board The 2D array which stores the pieces on the checkerboard
      * @return The list of possible moves that can be made
      */
     @Override
-    public ArrayList<int[]> getPossibleMoves(Piece[][] board) {
+    public ArrayList<int[]> getPossibleMoves() {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
         int[][] moveLocations;
 
@@ -53,11 +52,10 @@ public class Pawn extends Piece {
 
     /**
      * This method returns a 2D arraylist containing the coordinates of all the possible jumps that the Pawn can make
-     * @param board The 2D array which stores the pieces on the checkerboard
      * @return The list of possible jumps that can be made
      */
     @Override
-    public ArrayList<int[]> getPossibleJumps(Piece[][] board) {
+    public ArrayList<int[]> getPossibleJumps() {
         ArrayList<int[]> possibleJumps = new ArrayList<int[]>();
         int[][] moveLocations;
 
