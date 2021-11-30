@@ -60,7 +60,7 @@
      */
     public void print() {
         // Labels for each column are printed on-screen to make it easier for the players to make their moves
-        System.out.println("1 | 2 | 3 | 4 | 5 | 6 | 7 | 8\n-----------------------------");
+        System.out.println("   1 | 2 | 3 | 4 | 5 | 6 | 7 | 8\n  --------------------------------");
         for (int row = 0; row < 8; row++) {
             // Labels for each row are printed on-screen to make it easier for the players to make their moves
             System.out.print(row + "| ");
@@ -69,7 +69,7 @@
                     System.out.print("  | ");
                     continue;
                 }
-                System.out.print(this.board[row][col] + " | ");
+                System.out.print(this.board[row][col].getMarker() + " | ");
             }
             System.out.println();
         }

@@ -26,18 +26,22 @@ public class Game {
             for (int col = 0; col < 8; col++) {
                 // If the 
                 if (row <= 2 && (col - row + 4) % 2 == 0) {
-                    this.checkerboard.setPiece(new Pawn(row, col, "\u001B[33m⬤\u001B[0m"));
+                    this.checkerboard.setPiece(new Pawn(row, col, "\u001B[33mX\u001B[0m"));
                 }
                 //
                 else if (row >= 5 && (col - row + 7) % 2 == 1) {
-                    this.checkerboard.setPiece(new Pawn(row, col, "\u001B[31m▉\u001B[0m"));
+                    this.checkerboard.setPiece(new Pawn(row, col, "\u001B[31mO\u001B[0m"));
                 }
                 //
                 else {
-                    this.checkerboard.setPiece(null);
+                    this.checkerboard.setPiece(new Pawn(row, col, "."));
                 }
             }
         }
+    }
+
+    public void printBoard() {
+        this.checkerboard.print();
     }
 
     public boolean checkWin() {

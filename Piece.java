@@ -11,7 +11,7 @@ public abstract class Piece {
     // Attributes of a Piece object
     protected int row;
     protected int col;
-    protected int marker;
+    protected String marker;
 
     /**
      * Constructor method for Piece objects
