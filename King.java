@@ -1,11 +1,11 @@
-import java.util.ArrayList;
-
 /**
  * [ICS4U] Checkers | King.java
  * Date: December 2nd, 2021
  * @author Hadi Naqvi
  * Teacher: Mr. Ho
  */
+
+import java.util.ArrayList;
 
 public class King extends Piece {
     /**

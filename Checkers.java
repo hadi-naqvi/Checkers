@@ -11,7 +11,5 @@ public class Checkers {
 
         checkers.initializeBoard();
         checkers.printBoard();
-
-        System.out.println("Test");
     }
 }

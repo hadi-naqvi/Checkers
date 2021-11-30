@@ -1,12 +1,11 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * [ICS4U] Checkers | Pawn.java
  * Date: December 2nd, 2021
  * @author Hadi Naqvi
  * Teacher: Mr. Ho
  */
+
+import java.util.ArrayList;
 
 public class Pawn extends Piece {
     /**
