@@ -6,16 +6,38 @@
  */
 
 public class Game {
+    // Attributes of Game object
     private Board checkerboard;
     private int turns;
     
+    /**
+     * Constructor method for Game object which initializes its attributes
+     */
     public Game() {
         this.checkerboard = new Board();
         this.turns = 0;
     }
 
+    /**
+     * Initializes the checkerboard by instantiating and storing 24 pieces and storing 40 empty spaces/cells as null
+     */
     public void initializeBoard() {
-
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                // If the 
+                if (row <= 2 && (col - row + 4) % 2 == 0) {
+                    this.checkerboard.setPiece(new Pawn(row, col, "\u001B[33m⬤\u001B[0m"));
+                }
+                //
+                else if (row >= 5 && (col - row + 7) % 2 == 1) {
+                    this.checkerboard.setPiece(new Pawn(row, col, "\u001B[31m▉\u001B[0m"));
+                }
+                //
+                else {
+                    this.checkerboard.setPiece(null);
+                }
+            }
+        }
     }
 
     public boolean checkWin() {
@@ -39,6 +61,6 @@ public class Game {
     }
 
     public boolean promptReplay() {
-        
+
     }
 }

@@ -58,7 +58,7 @@
     /**
      * This method prints the current pieces stored in the 2D board array in a visually appealing manner in the console
      */
-    public void printBoard() {
+    public void print() {
         // Labels for each column are printed on-screen to make it easier for the players to make their moves
         System.out.println("1 | 2 | 3 | 4 | 5 | 6 | 7 | 8\n-----------------------------");
         for (int row = 0; row < 8; row++) {
