@@ -16,6 +16,6 @@ public class Checkers {
                 checkers.printBoard();
                 break;
             }
-        } while(checkers.promptReplay());
+        } while(checkers.replayPrompt() == true);
     }
 }

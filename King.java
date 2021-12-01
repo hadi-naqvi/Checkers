@@ -16,6 +16,7 @@ public class King extends Piece {
      */
     public King(int row, int col, String marker) {
         super(row, col, marker);
+        this.type = "king";
     }
 
     /**

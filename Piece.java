@@ -12,6 +12,7 @@ public abstract class Piece {
     protected int row;
     protected int col;
     protected String marker;
+    protected String type;
 
     /**
      * Constructor method for Piece objects
@@ -47,6 +48,14 @@ public abstract class Piece {
      */
     public String getMarker() {
         return this.marker;
+    }
+
+    /**
+     * This getter method returns the type of the piece
+     * @return The piece type
+     */
+    public String type() {
+        return this.type;
     }
     
     /**

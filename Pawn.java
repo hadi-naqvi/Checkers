@@ -16,6 +16,7 @@ public class Pawn extends Piece {
      */
     public Pawn(int row, int col, String marker) {
         super(row, col, marker);
+        this.type = "pawn";
     }
 
     /**

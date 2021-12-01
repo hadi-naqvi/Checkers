@@ -33,7 +33,7 @@ public class Game {
                 }
                 // Places all of player O's pawns
                 else if (row >= 5 && (col - row + 7) % 2 == 1) {
-                    this.checkerboard.setPiece(new Pawn(row, col, "\u001B[36mO\u001B[0m"));
+                    this.checkerboard.setPiece(new Pawn(row, col, "\u001B[36mX\u001B[0m"));
                 }
                 // Sets every empty cell/square on the checkerboard as null
                 else {
@@ -174,7 +174,7 @@ public class Game {
      * Prompts the user to play again
      * @return If the user wishes to play again
      */
-    public boolean promptReplay() {
+    public boolean replayPrompt() {
         String replay = "";
 
         // Repeatedly asks the user to enter "Yes" or "No" until they enter one of the two options

@@ -71,7 +71,12 @@
                     System.out.print("   |  ");
                     continue;
                 }
-                System.out.print(this.board[row][col].getMarker() + "  |  ");
+                else if (this.getPiece(row, col).type().equals("king")) {
+                    System.out.print(this.board[row][col].getMarker().substring(0, 5) + "K" + "\u001B[0m" + "  |  ");
+                }
+                else {
+                    System.out.print(this.board[row][col].getMarker() + "  |  ");
+                }
             }
             System.out.println("\n----------------------------------------------------");
         }
