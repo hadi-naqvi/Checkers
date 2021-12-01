@@ -19,7 +19,7 @@ public abstract class Piece {
      * @param col The column number when the piece is initialized
      * @param marker The marker when the piece is initialized
      */
-    public Piece(int row, int col, String marker) {
+    protected Piece(int row, int col, String marker) {
         this.row = row;
         this.col = col;
         this.marker = marker;

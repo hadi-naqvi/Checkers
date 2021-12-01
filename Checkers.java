@@ -9,7 +9,13 @@ public class Checkers {
     public static void main(String[] args) {
         Game checkers = new Game();
 
-        checkers.initializeBoard();
-        checkers.printBoard();
+        // Main program/game-loop
+        do {
+            checkers.initializeBoard();
+            while (true) {
+                checkers.printBoard();
+                break;
+            }
+        } while(checkers.promptReplay());
     }
 }

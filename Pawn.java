@@ -1,7 +1,7 @@
 /**
  * [ICS4U] Checkers | Pawn.java
  * Date: December 2nd, 2021
- * @author Hadi Naqvi
+ * @author Hadi Naqvi, Arjun Menon
  * Teacher: Mr. Ho
  */
 
