@@ -58,7 +58,7 @@ public class Game {
      */
     public boolean checkWin(String marker) {
         // Checks if the opponent can make a jump
-        if (canJump(marker)) return false;
+        //if (canJump(marker)) return false;
 
         // Iterates through every cell on the board and checks if the opponent has any pieces left on the board which can make a move
         for (int row = 0; row < 8; row++) {
@@ -75,22 +75,13 @@ public class Game {
     }
 
     /**
-     * Checks if a given player has pieces which can make a jump on the checkerboard
-     * @param marker The marker of the given player's pieces being checked
-     * @return If the player can make a jump with one of their pieces
+     * 
+     * @param piece
+     * @return 
      */
-    public boolean canJump(String marker) {
-        // Iterates through every cell and checks if it contains one of the player's pieces and if it can make a jump or not
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Piece piece = this.checkerboard.getPiece(row, col);
-                if (piece.getMarker().equals(marker) && piece.getPossibleJumps().size() > 0) {
-                    return true;
-                }
-            }
-        }
+    public boolean validateMove(Piece piece) {
+        
 
-        // Returns false if a jump cannot be made
         return false;
     }
 
@@ -165,40 +156,36 @@ public class Game {
 
     /**
      * This method moves a piece from one location to another specified location
-     * @param piece The pice being moved
+     * @param piece The piece being moved
      * @param coordinates The coordinates of the next location the piece is being moved to
      */
     public void makeMove(Piece piece, int[] coordinates) {
+        if (Math.abs(coordinates[0] - piece.getRow()) > 1 && Math.abs(coordinates[1] - piece.getCol()) > 1) {
+            this.checkerboard.removePiece((piece.getRow() + coordinates[0]) / 2, (piece.getCol() + coordinates[1]) / 2);
+        }
+
         this.checkerboard.removePiece(piece.getRow(), piece.getCol());
         piece.setRow(coordinates[0]);
         piece.setCol(coordinates[1]);
         this.checkerboard.setPiece(piece);
+        transformPossibleKings(piece);
         this.moves++;
-    }
-
-    /**
-     * This method removes a specified piece which is being captures
-     * @param row The row number of the piece
-     * @param col the column number of the piece
-     */
-    public void capturePiece(int row, int col) {
-        this.checkerboard.removePiece(row, col);
     }
 
     /**
      * This method checks if a Pawn is in the opponent's first row and has become king, and replaces it with a king piece
      * @param pawn The player's pawn
      */
-    public void checkAndUpdatePawnStatus(Pawn pawn) {
-        if (pawn.getMarker().equals("\u001B[33mX\u001B[0m")) {
-            if (pawn.getRow() == 0) {
-                this.checkerboard.removePiece(pawn.getRow(), pawn.getCol());
-                this.checkerboard.setPiece(new King(pawn.getRow(), pawn.getCol(), pawn.getMarker()));
+    public void transformPossibleKings(Piece piece) {
+        if (piece.getMarker().equals("\u001B[33mX\u001B[0m")) {
+            if (piece.getRow() == 7 && piece.type().equals("pawn")) {
+                this.checkerboard.removePiece(piece.getRow(), piece.getCol());
+                this.checkerboard.setPiece(new King(piece.getRow(), piece.getCol(), piece.getMarker()));
             }
         }
-        else if (pawn.getRow() == 7) {
-            this.checkerboard.removePiece(pawn.getRow(), pawn.getCol());
-            this.checkerboard.setPiece(new King(pawn.getRow(), pawn.getCol(), pawn.getMarker()));
+        else if (piece.getRow() == 0 && piece.type().equals("pawn")) {
+            this.checkerboard.removePiece(piece.getRow(), piece.getCol());
+            this.checkerboard.setPiece(new King(piece.getRow(), piece.getCol(), piece.getMarker()));
         }
     }
 
