@@ -61,7 +61,7 @@ public class Pawn extends Piece {
         ArrayList<int[][]> possibleJumps = new ArrayList<int[][]>();
         int[][][] moveLocations;
 
-        if(this.marker.equals("\u001B[31mO\u001B[0m")){
+        if(this.marker.equals("\u001B[36mX\u001B[0m")){
             moveLocations = new int[][][]{{{-2, -2}, {-1, -1}}, {{-2, 2}, {-1, 1}}};
         } else {
             moveLocations = new int[][][]{{{2, 2}, {1,1}}, {{2, -2}, {1, -1}}};
@@ -69,18 +69,14 @@ public class Pawn extends Piece {
 
         for (int[][] coordinates: moveLocations) {
             if (this.row + coordinates[0][0] <= 7 && this.row + coordinates[0][0] >=0 && this.col + coordinates[0][1] <=7 && this.col + coordinates[0][1] >=0){
-                    possibleJumps.add(coordinates);
+                coordinates[0][0] += this.row;
+                coordinates[0][1] += this.col;
+                coordinates[1][0] += this.row;
+                coordinates[1][1] += this.col;
+                possibleJumps.add(coordinates);
             }
         }
-
-        /*
-        for (int[] coordinates: moveLocations) {
-            if (row + coordinates[0] <= 7 && row + coordinates[0] >=0 && col + coordinates[1] <=7 && coordinates[1] >=0){
-                if (board[row + coordinates[0]][col + coordinates[1]] == null){
-                    possibleJumps.add(coordinates);
-                }
-            }
-        }*/
+        
         return possibleJumps;
     }
 }

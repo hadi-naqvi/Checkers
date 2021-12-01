@@ -14,7 +14,14 @@ public class Checkers {
             checkers.initializeBoard();
             while (true) {
                 checkers.printBoard();
-                break;
+                Piece piece = checkers.getMovePiece("\u001B[33mX\u001B[0m");
+                int[] coordinates = checkers.getMovePos(piece);
+                checkers.makeMove(piece, coordinates);
+
+                checkers.printBoard();
+                Piece piece2 = checkers.getMovePiece("\u001B[36mX\u001B[0m");
+                int[] coordinatess = checkers.getMovePos(piece);
+                checkers.makeMove(piece2, coordinatess);
             }
         } while(checkers.replayPrompt() == true);
     }

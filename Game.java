@@ -1,7 +1,7 @@
 /**
  * [ICS4U] Checkers | Game.java 
  * Date: December 2nd, 2021
- * @author Hadi Naqvi, Arjun Menon, Andrew Kwok
+ * @author Hadi Naqvi, Arjun Menon, and Andrew Kwok
  * Teacher: Mr. Ho
  */
 
@@ -116,8 +116,8 @@ public class Game {
                             validPiece = true;
                         }
                     }
-                    for (int[] jump : this.checkerboard.getPiece(coordinates[0], coordinates[1]).getPossibleJumps()) {
-                        if (this.checkerboard.getPiece(jump[0], jump[1]) != null) {
+                    for (int[][] jump : this.checkerboard.getPiece(coordinates[0], coordinates[1]).getPossibleJumps()) {
+                        if (this.checkerboard.getPiece(jump[0][0], jump[1][1]) != null) {
                             validPiece = true;
                         }
                     }
@@ -128,8 +128,33 @@ public class Game {
         return this.checkerboard.getPiece(coordinates[0], coordinates[1]);
     }
 
-    public int[][] getMovePos(Piece piece) {
-        
+    public int[] getMovePos(Piece piece) {
+        boolean validMove = false;
+        int[] coordinates;
+
+        // Continuously prompts the user to enter coordinates until they enter coordinates for a valid piece
+        do {
+            System.out.println("Enter the coordinates of the location you would like the piece to move to (Ex. 1,5):");
+            coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
+
+            // Checks if the
+            if (this.checkerboard.isCellEmpty(coordinates[0], coordinates[1])) {
+                for (int[] move : piece.getPossibleMoves()) {
+                    if (coordinates == move){
+                        validMove = true;
+                    }
+                }
+                for (int[][] jump : piece.getPossibleJumps()) {
+                    if (coordinates == jump[1]){
+                        validMove = true;
+                    }
+                }
+            }
+        } while(!validMove);
+
+        coordinates[0]--;
+        coordinates[1]--;
+        return coordinates;
     }
 
     /**
@@ -161,7 +186,8 @@ public class Game {
     public void checkAndUpdatePawnStatus(Pawn pawn) {
         if (pawn.getMarker().equals("\u001B[33mX\u001B[0m")) {
             if (pawn.getRow() == 0) {
-
+                this.checkerboard.removePiece(pawn.getRow(), pawn.getCol());
+                this.checkerboard.setPiece(new King(pawn.getRow(), pawn.getCol(), pawn.getMarker()));
             }
         }
         else if (pawn.getRow() == 7) {
