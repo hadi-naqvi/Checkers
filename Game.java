@@ -114,12 +114,14 @@ public class Game {
             if (!this.checkerboard.isCellEmpty(coordinates[0], coordinates[1])) {
                 if (this.checkerboard.getPiece(coordinates[0], coordinates[1]).getMarker() == marker) {
                     for (int[] move : this.checkerboard.getPiece(coordinates[0], coordinates[1]).getPossibleMoves()) {
-                        if (this.checkerboard.getPiece(move[0], move[1]) != null) {
+                        if (this.checkerboard.getPiece(move[0], move[1]) == null) {
                             validPiece = true;
                         }
                     }
                     for (int[][] jump : this.checkerboard.getPiece(coordinates[0], coordinates[1]).getPossibleJumps()) {
-                        if (this.checkerboard.getPiece(jump[0][0], jump[1][1]) != null) {
+                        if (this.checkerboard.getPiece(jump[1][0], jump[1][1]) != null 
+                         && !this.checkerboard.getPiece(jump[1][0], jump[1][1]).getMarker().equals(marker)
+                         && this.checkerboard.getPiece(jump[0][0], jump[0][1]) == null) {
                             validPiece = true;
                         }
                     }
@@ -144,12 +146,14 @@ public class Game {
             // Checks if the
             if (this.checkerboard.isCellEmpty(coordinates[0], coordinates[1])) {
                 for (int[] move : piece.getPossibleMoves()) {
-                    if (coordinates == move){
+                    if (coordinates[0] == move[0] && coordinates[1] == move[1] && this.checkerboard.getPiece(move[0], move[1]) == null){
                         validMove = true;
                     }
                 }
                 for (int[][] jump : piece.getPossibleJumps()) {
-                    if (coordinates == jump[1]){
+                    if (this.checkerboard.getPiece(jump[1][0], jump[1][1]) != null 
+                    && !this.checkerboard.getPiece(jump[1][0], jump[1][1]).getMarker().equals(piece.getMarker())
+                    && this.checkerboard.getPiece(jump[0][0], jump[0][1]) == null){
                         validMove = true;
                     }
                 }
