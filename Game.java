@@ -57,40 +57,61 @@ public class Game {
      * @return If the given player has won the game
      */
     public boolean checkWin(String marker) {
-        // Checks if the opponent can make a jump
-        if (canJump(marker)) return false;
-
         // Iterates through every cell on the board and checks if the opponent has any pieces left on the board which can make a move
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
-                Piece piece = this.checkerboard.getPiece(row, col);
-                if (piece.getMarker().equals(marker) && piece.getPossibleMoves().size() > 0) {
+                // Checks if the opponent can make a move/jump with any of their pieces
+                if (this.canJump(this.checkerboard.getPiece(row, col)) || this.canMove(this.checkerboard.getPiece(row, col))) {
                     return false;
                 }
             }
         }
-
         // Returns true if a jump or move cannot be made by the opponent
         return true;
     }
 
     /**
-     * Checks if a given player has pieces which can make a jump on the checkerboard
-     * @param marker The marker of the given player's pieces being checked
-     * @return If the player can make a jump with one of their pieces
+     * This method determines if a given piece is able to make jump(s)
+     * @param piece The piece being checked
+     * @return If the player can make a jump with the piece
      */
-    public boolean canJump(String marker) {
-        // Iterates through every cell and checks if it contains one of the player's pieces and if it can make a jump or not
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Piece piece = this.checkerboard.getPiece(row, col);
-                if (piece.getMarker().equals(marker) && piece.getPossibleJumps().size() > 0) {
-                    return true;
-                }
+    public boolean canJump(Piece piece) {
+        for (int[][] jump : piece.getPossibleJumps()) {
+            if (this.checkerboard.getPiece(jump[1][0], jump[1][1]) != null 
+            && !this.checkerboard.getPiece(jump[1][0], jump[1][1]).getMarker().equals(piece.getMarker())
+            && this.checkerboard.getPiece(jump[0][0], jump[0][1]) == null) {
+                return true;
             }
         }
+        return false;
+    }
 
-        // Returns false if a jump cannot be made
+    /**
+     * This method determines if a given piece can make a move
+     * @param piece The piece being checked
+     * @return If the piece can make a move
+     */
+    public boolean canMove(Piece piece) {
+        for (int[] move : piece.getPossibleMoves()) {
+            if (this.checkerboard.getPiece(move[0], move[1]) == null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * This method determines if a given piece can make a move
+     * @param piece The piece being checked
+     * @param coordinates The coordinates of the final position after the move is made
+     * @return If the piece can make a move
+     */
+    public boolean canMove(Piece piece, int[] coordinates) {
+        for (int[] move : piece.getPossibleMoves()) {
+            if (this.checkerboard.getPiece(move[0], move[1]) == null && coordinates[0] == move[0] && coordinates[1] == move[1]) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -101,31 +122,55 @@ public class Game {
      */
     public Piece getMovePiece(String marker) {
         boolean validPiece = false;
-        int[] coordinates;
+        int[] coordinates = {0, 0};
         
         // Continuously prompts the user to enter coordinates until they enter coordinates for a valid piece
         do {
-            System.out.println("Enter the coordinates of the piece you would like to move (Ex. 1,5):");
-            coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
-            coordinates[0]--;
-            coordinates[1]--;
-
-            // Checks if the 
-            if (!this.checkerboard.isCellEmpty(coordinates[0], coordinates[1])) {
-                if (this.checkerboard.getPiece(coordinates[0], coordinates[1]).getMarker() == marker) {
-                    for (int[] move : this.checkerboard.getPiece(coordinates[0], coordinates[1]).getPossibleMoves()) {
-                        if (this.checkerboard.getPiece(move[0], move[1]) == null) {
-                            validPiece = true;
-                        }
-                    }
-                    for (int[][] jump : this.checkerboard.getPiece(coordinates[0], coordinates[1]).getPossibleJumps()) {
-                        if (this.checkerboard.getPiece(jump[1][0], jump[1][1]) != null 
-                         && !this.checkerboard.getPiece(jump[1][0], jump[1][1]).getMarker().equals(marker)
-                         && this.checkerboard.getPiece(jump[0][0], jump[0][1]) == null) {
-                            validPiece = true;
+            try {
+                boolean canJump = false;
+                for (int row = 0; row < 8; row++) {
+                    for (int col = 0; col < 8; col++) {
+                        Piece temp = this.checkerboard.getPiece(row, col);
+                        if (temp != null) {
+                            if (temp.getMarker().equals(marker) && canJump(temp)) {
+                                canJump = true;
+                            }
                         }
                     }
                 }
+
+                if (!canJump) {
+                    System.out.println("Enter the coordinates of the piece you would like to move (Ex. 1,5):");
+                }
+                else {
+                    System.out.println("You have an outstanding jump(s) to make. Enter the coordinates of the piece you would like to jump with (Ex. 1,5):");
+                }
+                coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
+                coordinates[0]--;
+                coordinates[1]--;
+
+                if (canJump) {
+                    if (!this.checkerboard.isCellEmpty(coordinates[0], coordinates[1])) {
+                        if (this.checkerboard.getPiece(coordinates[0], coordinates[1]).getMarker() == marker) {
+                            validPiece = this.canJump(this.checkerboard.getPiece(coordinates[0], coordinates[1]));
+                        }
+                    }
+                }
+                else {
+                    if (!this.checkerboard.isCellEmpty(coordinates[0], coordinates[1])) {
+                        if (this.checkerboard.getPiece(coordinates[0], coordinates[1]).getMarker() == marker) {
+                            validPiece = this.canMove(this.checkerboard.getPiece(coordinates[0], coordinates[1]));
+                        }
+                    }
+                }
+
+                if (!validPiece) {
+                    System.out.println("Invalid input! The piece you selected cannot be moved, does not exist, or you have outstanding jumps. Please try selecting again.");
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Invalid input! The piece you selected cannot be moved, or does not exist, or you have outstanding jumps. Please try selecting again.");
             }
         } while(!validPiece);
 
@@ -134,29 +179,39 @@ public class Game {
 
     public int[] getMovePos(Piece piece) {
         boolean validMove = false;
-        int[] coordinates;
+        int[] coordinates = {0, 0};
 
         // Continuously prompts the user to enter coordinates until they enter coordinates for a valid piece
         do {
-            System.out.println("Enter the coordinates of the location you would like the piece to move to (Ex. 1,5):");
-            coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
-            coordinates[0]--;
-            coordinates[1]--;
+            try {
+                System.out.println("Enter the coordinates of the location you would like the piece to move to (Ex. 1,5):");
+                coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
+                coordinates[0]--;
+                coordinates[1]--;
 
-            // Checks if the
-            if (this.checkerboard.isCellEmpty(coordinates[0], coordinates[1])) {
-                for (int[] move : piece.getPossibleMoves()) {
-                    if (coordinates[0] == move[0] && coordinates[1] == move[1] && this.checkerboard.getPiece(move[0], move[1]) == null){
-                        validMove = true;
+                // Checks if the
+                if (this.checkerboard.isCellEmpty(coordinates[0], coordinates[1])) {
+                    System.out.println("Test");
+                    for (int[] move : piece.getPossibleMoves()) {
+                        if (coordinates[0] == move[0] && coordinates[1] == move[1] && this.checkerboard.getPiece(move[0], move[1]) == null){
+                            validMove = true;
+                        }
+                    }
+                    for (int[][] jump : piece.getPossibleJumps()) {
+                        if (this.checkerboard.getPiece(jump[1][0], jump[1][1]) != null 
+                        && !this.checkerboard.getPiece(jump[1][0], jump[1][1]).getMarker().equals(piece.getMarker())
+                        && this.checkerboard.getPiece(jump[0][0], jump[0][1]) == null){
+                            validMove = true;
+                        }
                     }
                 }
-                for (int[][] jump : piece.getPossibleJumps()) {
-                    if (this.checkerboard.getPiece(jump[1][0], jump[1][1]) != null 
-                    && !this.checkerboard.getPiece(jump[1][0], jump[1][1]).getMarker().equals(piece.getMarker())
-                    && this.checkerboard.getPiece(jump[0][0], jump[0][1]) == null){
-                        validMove = true;
-                    }
+
+                if (!validMove) {
+                    System.out.println("Invalid input.");
                 }
+            }
+            catch(Exception e) {
+                System.out.println("Invalid input.");
             }
         } while(!validMove);
 
@@ -165,40 +220,34 @@ public class Game {
 
     /**
      * This method moves a piece from one location to another specified location
-     * @param piece The pice being moved
+     * @param piece The piece being moved
      * @param coordinates The coordinates of the next location the piece is being moved to
      */
     public void makeMove(Piece piece, int[] coordinates) {
+        if (Math.abs(coordinates[0] - piece.getRow()) > 1 && Math.abs(coordinates[1] - piece.getCol()) > 1) {
+            this.checkerboard.removePiece((piece.getRow() + coordinates[0]) / 2, (piece.getCol() + coordinates[1]) / 2);
+        }
+        
         this.checkerboard.removePiece(piece.getRow(), piece.getCol());
         piece.setRow(coordinates[0]);
         piece.setCol(coordinates[1]);
         this.checkerboard.setPiece(piece);
+        this.transformPossibleKing(piece);
         this.moves++;
-    }
-
-    /**
-     * This method removes a specified piece which is being captures
-     * @param row The row number of the piece
-     * @param col the column number of the piece
-     */
-    public void capturePiece(int row, int col) {
-        this.checkerboard.removePiece(row, col);
     }
 
     /**
      * This method checks if a Pawn is in the opponent's first row and has become king, and replaces it with a king piece
      * @param pawn The player's pawn
      */
-    public void checkAndUpdatePawnStatus(Pawn pawn) {
-        if (pawn.getMarker().equals("\u001B[33mX\u001B[0m")) {
-            if (pawn.getRow() == 0) {
-                this.checkerboard.removePiece(pawn.getRow(), pawn.getCol());
-                this.checkerboard.setPiece(new King(pawn.getRow(), pawn.getCol(), pawn.getMarker()));
-            }
+    public void transformPossibleKing(Piece piece) {
+        if (piece.getMarker().equals("\u001B[33mX\u001B[0m") && piece.getRow() == 7 && piece.type().equals("pawn")) {
+            this.checkerboard.removePiece(piece.getRow(), piece.getCol());
+            this.checkerboard.setPiece(new King(piece.getRow(), piece.getCol(), piece.getMarker()));
         }
-        else if (pawn.getRow() == 7) {
-            this.checkerboard.removePiece(pawn.getRow(), pawn.getCol());
-            this.checkerboard.setPiece(new King(pawn.getRow(), pawn.getCol(), pawn.getMarker()));
+        else if (piece.getRow() == 0 && piece.type().equals("pawn")) {
+            this.checkerboard.removePiece(piece.getRow(), piece.getCol());
+            this.checkerboard.setPiece(new King(piece.getRow(), piece.getCol(), piece.getMarker()));
         }
     }
 
