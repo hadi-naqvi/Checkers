@@ -107,10 +107,12 @@ public class Game {
         do {
             System.out.println("Enter the coordinates of the piece you would like to move (Ex. 1,5):");
             coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
+            coordinates[0]--;
+            coordinates[1]--;
 
             // Checks if the 
             if (!this.checkerboard.isCellEmpty(coordinates[0], coordinates[1])) {
-                if (this.checkerboard.getPiece(coordinates[0], coordinates[1]) != null && this.checkerboard.getPiece(coordinates[0], coordinates[1]).getMarker() == marker) {
+                if (this.checkerboard.getPiece(coordinates[0], coordinates[1]).getMarker() == marker) {
                     for (int[] move : this.checkerboard.getPiece(coordinates[0], coordinates[1]).getPossibleMoves()) {
                         if (this.checkerboard.getPiece(move[0], move[1]) != null) {
                             validPiece = true;
@@ -136,6 +138,8 @@ public class Game {
         do {
             System.out.println("Enter the coordinates of the location you would like the piece to move to (Ex. 1,5):");
             coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
+            coordinates[0]--;
+            coordinates[1]--;
 
             // Checks if the
             if (this.checkerboard.isCellEmpty(coordinates[0], coordinates[1])) {
@@ -152,8 +156,6 @@ public class Game {
             }
         } while(!validMove);
 
-        coordinates[0]--;
-        coordinates[1]--;
         return coordinates;
     }
 
