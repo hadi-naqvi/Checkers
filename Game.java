@@ -1,10 +1,12 @@
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Game {
     // Attributes of Game object
     private Board checkerboard;
     private int moves;
+    private static final HashMap<String, Integer> rowLabels = new HashMap<String, Integer>();
 
     /**
      * Constructor method for Game object which initializes its attributes
@@ -12,6 +14,14 @@ public class Game {
     public Game() {
         this.checkerboard = new Board();
         this.moves = 0;
+        rowLabels.put("A", 1);
+        rowLabels.put("B", 2);
+        rowLabels.put("C", 3);
+        rowLabels.put("D", 4);
+        rowLabels.put("E", 5);
+        rowLabels.put("F", 6);
+        rowLabels.put("G", 7);
+        rowLabels.put("H", 8);
     }
 
     /**
@@ -168,13 +178,15 @@ public class Game {
             try {
                 boolean canJump = this.canJump(marker);
                 if (!canJump) {
-                    System.out.println("Enter the coordinates of the piece you would like to move (Ex. 1,5):");
+                    System.out.println("Enter the coordinates of the piece you would like to move (Ex. A,5):");
                 } else {
-                    System.out.println("You have outstanding jump(s) to make. Enter the coordinates of the piece you would like to jump with (Ex. 1,5):");
+                    System.out.println("You have outstanding jump(s) to make. Enter the coordinates of the piece you would like to jump with (Ex. A,5):");
                 }
-                coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
-                coordinates[0]--;
-                coordinates[1]--;
+                
+                String[] input = new Scanner(System.in).nextLine().split(",");
+                //coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
+                coordinates[0] = rowLabels.get(input[0].toUpperCase()) - 1;
+                coordinates[1] = Integer.parseInt(input[1]) - 1;
 
                 if (!this.checkerboard.isCellEmpty(coordinates[0], coordinates[1]) && this.checkerboard.getPiece(coordinates[0], coordinates[1]).getMarker().equals(marker)) {
                     if (canJump) {
@@ -202,10 +214,12 @@ public class Game {
         // Continuously prompts the user to enter coordinates until they enter coordinates for a valid piece
         do {
             try {
-                System.out.println("Enter the coordinates of the location you would like the piece to move to (Ex. 1,5):");
-                coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
-                coordinates[0]--;
-                coordinates[1]--;
+                System.out.println("Enter the coordinates of the location you would like the piece to move to (Ex. A,5):");
+                
+                String[] input = new Scanner(System.in).nextLine().split(",");
+                //coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
+                coordinates[0] = rowLabels.get(input[0].toUpperCase()) - 1;
+                coordinates[1] = Integer.parseInt(input[1]) - 1;
 
                 if (this.canJump(piece)) {
                     if (this.canJump(piece, coordinates)) {

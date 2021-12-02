@@ -5,14 +5,25 @@
  * Teacher: Mr. Ho
  */
 
+import java.util.HashMap;
+
 public class Board {
     // The board is a 2D Piece array stored as an attribute of a Board object (Private/Encapsulated attribute with getter/setter methods)
     private Piece[][] board;
+    private static final HashMap<Integer, String> rowLabels = new HashMap<Integer, String>();
 
     // Constructor method which initliazes the board attribute
     public Board() {
         // The dimensions of the 2D array are the same as the dimensions of a checkerboard which is 8x8
         this.board = new Piece[8][8];
+        rowLabels.put(1, "A");
+        rowLabels.put(2, "B");
+        rowLabels.put(3, "C");
+        rowLabels.put(4, "D");
+        rowLabels.put(5, "E");
+        rowLabels.put(6, "F");
+        rowLabels.put(7, "G");
+        rowLabels.put(8, "H");
     }
 
     /**
@@ -76,7 +87,7 @@ public class Board {
         System.out.println("   |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |\n----------------------------------------------------");
         for (int row = 0; row < 8; row++) {
             // Labels for each row are printed on-screen to make it easier for the players to make their moves
-            System.out.print(" " + (row + 1) + " |  ");
+            System.out.print(" " + rowLabels.get((row + 1)) + " |  ");
             for (int col = 0; col < 8; col++) {
                 if (this.board[row][col] == null) {
                     System.out.print("   |  ");
