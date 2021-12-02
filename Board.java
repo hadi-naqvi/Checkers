@@ -35,6 +35,14 @@
         }
     }
 
+    /**
+      * This setter method moves a specified piece by changing its location in the 2D board array which stores the pieces
+      * @param piece The piece being moved
+      */
+    public void setPiece(int row, int col) {
+        this.board[row][col] = null;
+    }
+
      /**
       * This setter method removes a specified piece on the checkerboard and sets it to null (empty cell)
       * @param row The row of the piece being removed

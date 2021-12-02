@@ -28,7 +28,7 @@ public class Pawn extends Piece {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
         int[][] moveLocations;
 
-        if(this.marker.equals("\u001B[36mX\u001B[0m")){
+        if(this.marker.equals("\u001B[36mO\u001B[0m")){
             moveLocations = new int[][]{{-1, -1}, {-1, 1}};
         } else {
             moveLocations = new int[][]{{1, 1}, {1, -1}};
@@ -61,7 +61,7 @@ public class Pawn extends Piece {
         ArrayList<int[][]> possibleJumps = new ArrayList<int[][]>();
         int[][][] moveLocations;
 
-        if(this.marker.equals("\u001B[36mX\u001B[0m")){
+        if(this.marker.equals("\u001B[36mO\u001B[0m")){
             moveLocations = new int[][][]{{{-2, -2}, {-1, -1}}, {{-2, 2}, {-1, 1}}};
         } else {
             moveLocations = new int[][][]{{{2, 2}, {1,1}}, {{2, -2}, {1, -1}}};

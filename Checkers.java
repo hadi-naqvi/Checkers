@@ -8,24 +8,45 @@
 public class Checkers {
     public static void main(String[] args) {
         Game checkers = new Game();
+        boolean playerOneTurn = true;
 
         // Main program/game-loop
         do {
             checkers.initializeBoard();
+            checkers.printBoard();
             while (true) {
-                checkers.printBoard();
-                Piece piece = checkers.getMovePiece("\u001B[33mX\u001B[0m");
-                do {
-                    int[] coordinates = checkers.getMovePos(piece);
-                    checkers.makeMove(piece, coordinates);
-                } while(checkers.canJump(piece));
+                String marker = "";
+                if (playerOneTurn) {
+                    marker = "\u001B[33mO\u001B[0m";
+                }
+                else {
+                    marker = "\u001B[36mO\u001B[0m";
+                }
 
                 checkers.printBoard();
-                Piece piece2 = checkers.getMovePiece("\u001B[36mX\u001B[0m");
-                do {
-                    int[] coordinatess = checkers.getMovePos(piece2);
-                    checkers.makeMove(piece2, coordinatess);
-                } while(checkers.canJump(piece2));
+                Piece piece = checkers.getMovePiece(marker);
+                if (checkers.canJump(piece)) {
+                    do {
+                        checkers.printBoard();
+                        System.out.println("You have outstanding jump(s) to make.");
+                        int[] coordinates = checkers.getMovePos(piece);
+                        checkers.makeMove(piece, coordinates);
+                    } while(checkers.canJump(piece));
+                }
+                else {
+                    checkers.printBoard();
+                    int[] coordinates = checkers.getMovePos(piece);
+                    checkers.makeMove(piece, coordinates);
+                }
+
+                if (checkers.checkWin(marker)) {
+                    checkers.printBoard();
+                    System.out.println("Player " + marker + " has won the game!");
+                    break;
+                }
+
+                playerOneTurn = !playerOneTurn;
+
             }
         } while(checkers.replayPrompt() == true);
     }
