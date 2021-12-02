@@ -1,5 +1,11 @@
+/**
+ * [ICS4U] Checkers | Game.java
+ * Date: December 2nd, 2021
+ * @author Hadi Naqvi, Arjun Menon, Anderew Kwok
+ * Teacher: Mr. Ho
+ */
+
 import java.util.Scanner;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Game {
