@@ -12,18 +12,16 @@ public class Board {
     private Piece[][] board;
     private static final HashMap<Integer, String> rowLabels = new HashMap<Integer, String>();
 
-    // Constructor method which initliazes the board attribute
+    // Constructor method which initializes the board attribute
     public Board() {
         // The dimensions of the 2D array are the same as the dimensions of a checkerboard which is 8x8
         this.board = new Piece[8][8];
-        rowLabels.put(1, "A");
-        rowLabels.put(2, "B");
-        rowLabels.put(3, "C");
-        rowLabels.put(4, "D");
-        rowLabels.put(5, "E");
-        rowLabels.put(6, "F");
-        rowLabels.put(7, "G");
-        rowLabels.put(8, "H");
+
+        // Populates the rowLabels hashmap with the rows and their corresponding integer values
+        String[] rows = {"A", "B", "C", "D", "E", "F", "G", "H"};
+        for (int i = 0; i < 8; i++) {
+            rowLabels.put(i + 1 , rows[i]);
+        }
     }
 
     /**
@@ -43,19 +41,7 @@ public class Board {
      * @param piece The piece being moved
      */
     public void setPiece(Piece piece) {
-        if (piece != null) {
-            this.board[piece.getRow()][piece.getCol()] = piece;
-        }
-    }
-
-    /**
-     * This setter method moves a specified piece by changing its location in the 2D board array which stores the pieces
-     *
-     * @param col The column of the piece being set
-     * @param row The row of the piece being set
-     */
-    public void setPiece(int row, int col) {
-        this.board[row][col] = null;
+        this.board[piece.getRow()][piece.getCol()] = piece;
     }
 
     /**

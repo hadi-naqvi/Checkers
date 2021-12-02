@@ -13,6 +13,7 @@ public class Game {
     private Board checkerboard;
     private int moves;
     private static final HashMap<String, Integer> rowLabels = new HashMap<String, Integer>();
+    private static final Scanner scanner = new Scanner(System.in);
 
     /**
      * Constructor method for Game object which initializes its attributes
@@ -20,14 +21,11 @@ public class Game {
     public Game() {
         this.checkerboard = new Board();
         this.moves = 0;
-        rowLabels.put("A", 1);
-        rowLabels.put("B", 2);
-        rowLabels.put("C", 3);
-        rowLabels.put("D", 4);
-        rowLabels.put("E", 5);
-        rowLabels.put("F", 6);
-        rowLabels.put("G", 7);
-        rowLabels.put("H", 8);
+
+        String[] rows = {"A", "B", "C", "D", "E", "F", "G", "H"};
+        for (int i = 0; i < 8; i++) {
+            rowLabels.put(rows[i], i + 1);
+        }
     }
 
     /**
@@ -44,9 +42,9 @@ public class Game {
                 else if (row >= 5 && (col - row + 7) % 2 == 1) {
                     this.checkerboard.setPiece(new Pawn(row, col, "\u001B[36mO\u001B[0m"));
                 }
-                // Sets every empty cell/square on the checkerboard as null
+                // Removes pieces in cells/squares which should be empty and sets them to null
                 else {
-                    this.checkerboard.setPiece(row, col);
+                    this.checkerboard.removePiece(row, col);
                 }
             }
         }
@@ -122,7 +120,7 @@ public class Game {
      * @param marker The player's marker
      * @return If the player can make a jump with the piece
      */
-    public boolean canJump(String marker) {
+    public boolean hasOutstandingJump(String marker) {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 Piece temp = this.checkerboard.getPiece(row, col);
@@ -182,15 +180,14 @@ public class Game {
         // Continuously prompts the user to enter coordinates until they enter coordinates for a valid piece
         do {
             try {
-                boolean canJump = this.canJump(marker);
+                boolean canJump = this.hasOutstandingJump(marker);
                 if (!canJump) {
-                    System.out.println("Enter the coordinates of the piece you would like to move (Ex. A,5):");
+                    System.out.println("Player " + marker + ", enter the coordinates of the piece you would like to move (Ex. A,5):");
                 } else {
-                    System.out.println("You have outstanding jump(s) to make. Enter the coordinates of the piece you would like to jump with (Ex. A,5):");
+                    System.out.println("You have outstanding jump(s) to make. " + "Player " + marker + ", enter the coordinates of the piece you would like to move (Ex. A,5):");
                 }
                 
-                String[] input = new Scanner(System.in).nextLine().split(",");
-                //coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
+                String[] input = scanner.nextLine().split(",");
                 coordinates[0] = rowLabels.get(input[0].toUpperCase()) - 1;
                 coordinates[1] = Integer.parseInt(input[1]) - 1;
 
@@ -220,9 +217,9 @@ public class Game {
         // Continuously prompts the user to enter coordinates until they enter coordinates for a valid piece
         do {
             try {
-                System.out.println("Enter the coordinates of the location you would like the piece to move to (Ex. A,5):");
+                System.out.println("Player " + piece.getMarker() + ", enter the coordinates of the location you would like the piece to move to (Ex. A,5):");
                 
-                String[] input = new Scanner(System.in).nextLine().split(",");
+                String[] input = scanner.nextLine().split(",");
                 //coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
                 coordinates[0] = rowLabels.get(input[0].toUpperCase()) - 1;
                 coordinates[1] = Integer.parseInt(input[1]) - 1;
@@ -289,12 +286,19 @@ public class Game {
         // Repeatedly asks the user to enter "Yes" or "No" until they enter one of the two options
         do {
             System.out.println("Would you like to play again?");
-            replay = new Scanner(System.in).nextLine();
+            replay = scanner.nextLine();
             if (!(replay.equalsIgnoreCase("yes") || replay.equalsIgnoreCase("no"))) {
                 System.out.println("Invalid input. Please try again.");
             }
         } while (!(replay.equalsIgnoreCase("yes") || replay.equalsIgnoreCase("no")));
 
         return replay.equalsIgnoreCase("yes");
+    }
+
+    /**
+     * This deconstructor method closes the scanner used in the program for user-input
+     */
+    public void closeScanner() {
+        scanner.close();
     }
 }

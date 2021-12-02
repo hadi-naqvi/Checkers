@@ -48,5 +48,6 @@ public class Checkers {
 
             }
         } while (checkers.replayPrompt());
+        checkers.closeScanner();
     }
 }
