@@ -1,7 +1,7 @@
 /**
  * [ICS4U] Checkers | Piece.java
  * Date: December 2nd, 2021
- * @author Hadi Naqvi
+ * @author Hadi Naqvi, Arjun Menon, Andrew Kwok
  * Teacher: Mr. Ho
  */
 
@@ -57,10 +57,10 @@ public abstract class Piece {
     public String type() {
         return this.type;
     }
-    
+
     /**
      * This setter method changes the row number of a piece
-     * @param row
+     * @param row Row to be set
      */
     public void setRow(int row) {
         this.row = row;
@@ -68,18 +68,10 @@ public abstract class Piece {
 
     /**
      * This setter method changes the column number of a piece
-     * @param col
+     * @param col Column to be set
      */
     public void setCol(int col) {
         this.col = col;
-    }
-
-    /**
-     * This setter method changes the marker of the piece (which is displayed on the checkerboard)
-     * @param marker
-     */
-    public void setMarker(String marker) {
-        this.marker = marker;
     }
 
     /**
@@ -87,7 +79,7 @@ public abstract class Piece {
      * @return The list of possible moves that can be made
      */
     public abstract ArrayList<int[]> getPossibleMoves();
-    
+
     /**
      * This abstract method determines all possible jumps that can be made for a piece
      * @return The list of possible jumps that can be made

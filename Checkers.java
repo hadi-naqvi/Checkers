@@ -1,7 +1,7 @@
 /**
- * [ICS4U] Checkers | Checkers.java 
+ * [ICS4U] Checkers | Checkers.java
  * Date: December 2nd, 2021
- * @author Hadi Naqvi
+ * @author Hadi Naqvi, Arjun Menon, Andrew Kwok
  * Teacher: Mr. Ho
  */
 
@@ -9,34 +9,33 @@ public class Checkers {
     public static void main(String[] args) {
         Game checkers = new Game();
         boolean playerOneTurn = true;
+        String marker;
+        int[] movePos;
 
         // Main program/game-loop
         do {
             checkers.initializeBoard();
             checkers.printBoard();
             while (true) {
-                String marker = "";
-                if (playerOneTurn) {
+              if (playerOneTurn) {
                     marker = "\u001B[33mO\u001B[0m";
-                }
-                else {
+                } else {
                     marker = "\u001B[36mO\u001B[0m";
                 }
 
-                checkers.printBoard();
                 Piece piece = checkers.getMovePiece(marker);
                 if (checkers.canJump(piece)) {
                     do {
-                        checkers.printBoard();
                         System.out.println("You have outstanding jump(s) to make.");
-                        int[] coordinates = checkers.getMovePos(piece);
-                        checkers.makeMove(piece, coordinates);
-                    } while(checkers.canJump(piece));
-                }
-                else {
+                        movePos = checkers.getMovePos(piece);
+                        checkers.makeMove(piece, movePos);
+                        checkers.printBoard();
+
+                    } while (checkers.canJump(piece));
+                } else {
+                    movePos = checkers.getMovePos(piece);
+                    checkers.makeMove(piece, movePos);
                     checkers.printBoard();
-                    int[] coordinates = checkers.getMovePos(piece);
-                    checkers.makeMove(piece, coordinates);
                 }
 
                 if (checkers.checkWin(marker)) {
@@ -48,6 +47,6 @@ public class Checkers {
                 playerOneTurn = !playerOneTurn;
 
             }
-        } while(checkers.replayPrompt() == true);
+        } while (checkers.replayPrompt());
     }
 }

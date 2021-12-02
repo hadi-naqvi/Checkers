@@ -1,7 +1,7 @@
 /**
  * [ICS4U] Checkers | King.java
  * Date: December 2nd, 2021
- * @author Hadi Naqvi, Arjun Menon
+ * @author Hadi Naqvi, Arjun Menon, Anderew Kwok
  * Teacher: Mr. Ho
  */
 
@@ -30,22 +30,14 @@ public class King extends Piece {
                 {-1, -1}, {-1, 1}, {1, 1}, {1, -1}
         };
 
-        for (int[] coordinates: moveLocations) {
-            if (this.row + coordinates[0] <= 7 && this.row + coordinates[0] >=0 && this.col + coordinates[1] <=7 && this.col + coordinates[1] >=0){
+        for (int[] coordinates : moveLocations) {
+            if (this.row + coordinates[0] <= 7 && this.row + coordinates[0] >= 0 && this.col + coordinates[1] <= 7 && this.col + coordinates[1] >= 0) {
                 coordinates[0] += this.row;
                 coordinates[1] += this.col;
                 possibleMoves.add(coordinates);
             }
         }
 
-        /*
-        for (int[] coordinates: moveLocations) {
-            if (row + coordinates[0] <= 7 && row + coordinates[0] >=0 && col + coordinates[1] <=7 && coordinates[1] >=0){
-                if (board[row + coordinates[0]][col + coordinates[1]] == null){
-                    possibleMoves.add(coordinates);
-                }
-            }
-        }*/
         return possibleMoves;
     }
 
@@ -55,13 +47,13 @@ public class King extends Piece {
      */
     @Override
     public ArrayList<int[][]> getPossibleJumps() {
-        ArrayList<int[][]> possibleJumps = new ArrayList<>();
+        ArrayList<int[][]> possibleJumps = new ArrayList<int[][]>();
         int[][][] moveLocations = {
-                {{-2, -2}, {-1,-1}}, {{-2, 2}, {-1, 1}}, {{2, 2}, {1, 1}}, {{2, -2}, {1, -1}}
+                {{-2, -2}, {-1, -1}}, {{-2, 2}, {-1, 1}}, {{2, 2}, {1, 1}}, {{2, -2}, {1, -1}}
         };
 
-        for (int[][] coordinates: moveLocations) {
-            if (this.row + coordinates[0][0] <= 7 && this.row + coordinates[0][0] >=0 && this.col + coordinates[0][1] <=7 && this.col + coordinates[0][1] >=0){
+        for (int[][] coordinates : moveLocations) {
+            if (this.row + coordinates[0][0] <= 7 && this.row + coordinates[0][0] >= 0 && this.col + coordinates[0][1] <= 7 && this.col + coordinates[0][1] >= 0) {
                 coordinates[0][0] += this.row;
                 coordinates[0][1] += this.col;
                 coordinates[1][0] += this.row;

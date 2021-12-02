@@ -1,10 +1,3 @@
-/**
- * [ICS4U] Checkers | Game.java 
- * Date: December 2nd, 2021
- * @author Hadi Naqvi, Arjun Menon, and Andrew Kwok
- * Teacher: Mr. Ho
- */
-
 import java.util.Scanner;
 import java.util.Arrays;
 
@@ -12,7 +5,7 @@ public class Game {
     // Attributes of Game object
     private Board checkerboard;
     private int moves;
-    
+
     /**
      * Constructor method for Game object which initializes its attributes
      */
@@ -47,7 +40,7 @@ public class Game {
      * Outputs the checkerboard on-screen in a visually appealing manner
      */
     public void printBoard() {
-        System.out.println("----------------------CHECKERS----------------------" + " \n" + "\t\tNumber of Moves made: " + this.moves);
+        System.out.println("----------------------CHECKERS----------------------" + " \n" + "Number of Moves made: " + this.moves);
         this.checkerboard.print();
     }
 
@@ -78,9 +71,9 @@ public class Game {
     public boolean canJump(Piece piece) {
         if (piece != null) {
             for (int[][] jump : piece.getPossibleJumps()) {
-                if (this.checkerboard.getPiece(jump[1][0], jump[1][1]) != null 
-                && !this.checkerboard.getPiece(jump[1][0], jump[1][1]).getMarker().equals(piece.getMarker())
-                && this.checkerboard.getPiece(jump[0][0], jump[0][1]) == null) {
+                if (this.checkerboard.getPiece(jump[1][0], jump[1][1]) != null
+                        && !this.checkerboard.getPiece(jump[1][0], jump[1][1]).getMarker().equals(piece.getMarker())
+                        && this.checkerboard.getPiece(jump[0][0], jump[0][1]) == null) {
                     return true;
                 }
             }
@@ -96,11 +89,11 @@ public class Game {
     public boolean canJump(Piece piece, int[] coordinates) {
         if (piece != null) {
             for (int[][] jump : piece.getPossibleJumps()) {
-                if (this.checkerboard.getPiece(jump[1][0], jump[1][1]) != null 
-                && !this.checkerboard.getPiece(jump[1][0], jump[1][1]).getMarker().equals(piece.getMarker())
-                && this.checkerboard.getPiece(jump[0][0], jump[0][1]) == null
-                && coordinates[0] == jump[0][0]
-                && coordinates[1] == jump[0][1]) {
+                if (this.checkerboard.getPiece(jump[1][0], jump[1][1]) != null
+                        && !this.checkerboard.getPiece(jump[1][0], jump[1][1]).getMarker().equals(piece.getMarker())
+                        && this.checkerboard.getPiece(jump[0][0], jump[0][1]) == null
+                        && coordinates[0] == jump[0][0]
+                        && coordinates[1] == jump[0][1]) {
                     return true;
                 }
             }
@@ -110,7 +103,7 @@ public class Game {
 
     /**
      * This method determines if a given piece is able to make jump(s)
-     * @param piece The piece being checked
+     * @param marker The player's marker
      * @return If the player can make a jump with the piece
      */
     public boolean canJump(String marker) {
@@ -126,7 +119,6 @@ public class Game {
         }
         return false;
     }
-
 
 
     /**
@@ -170,26 +162,24 @@ public class Game {
     public Piece getMovePiece(String marker) {
         boolean validPiece = false;
         int[] coordinates = {0, 0};
-        
+
         // Continuously prompts the user to enter coordinates until they enter coordinates for a valid piece
         do {
             try {
                 boolean canJump = this.canJump(marker);
                 if (!canJump) {
                     System.out.println("Enter the coordinates of the piece you would like to move (Ex. 1,5):");
-                }
-                else {
+                } else {
                     System.out.println("You have outstanding jump(s) to make. Enter the coordinates of the piece you would like to jump with (Ex. 1,5):");
                 }
                 coordinates = Arrays.stream(new Scanner(System.in).nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
                 coordinates[0]--;
                 coordinates[1]--;
 
-                if (!this.checkerboard.isCellEmpty(coordinates[0], coordinates[1]) && this.checkerboard.getPiece(coordinates[0], coordinates[1]).getMarker() == marker) {
+                if (!this.checkerboard.isCellEmpty(coordinates[0], coordinates[1]) && this.checkerboard.getPiece(coordinates[0], coordinates[1]).getMarker().equals(marker)) {
                     if (canJump) {
                         validPiece = this.canJump(this.checkerboard.getPiece(coordinates[0], coordinates[1]));
-                    }
-                    else {
+                    } else {
                         validPiece = this.canMove(this.checkerboard.getPiece(coordinates[0], coordinates[1]));
                     }
                 }
@@ -197,11 +187,10 @@ public class Game {
                 if (!validPiece) {
                     System.out.println("Invalid input! The piece you selected cannot be moved, does not exist, or you have outstanding jumps. Please try selecting again.");
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Invalid input! The piece you selected cannot be moved, or does not exist, or you have outstanding jumps. Please try selecting again.");
             }
-        } while(!validPiece);
+        } while (!validPiece);
 
         return this.checkerboard.getPiece(coordinates[0], coordinates[1]);
     }
@@ -223,19 +212,17 @@ public class Game {
                         validMove = true;
                         return coordinates;
                     }
-                }
-                else if (this.canMove(piece, coordinates)) {
+                } else if (this.canMove(piece, coordinates)) {
                     validMove = true;
                 }
 
                 if (!validMove) {
                     System.out.println("Invalid input.");
                 }
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 System.out.println("Invalid input.");
             }
-        } while(!validMove);
+        } while (!validMove);
 
         return coordinates;
     }
@@ -249,7 +236,7 @@ public class Game {
         if (Math.abs(coordinates[0] - piece.getRow()) > 1 && Math.abs(coordinates[1] - piece.getCol()) > 1) {
             this.checkerboard.removePiece((piece.getRow() + coordinates[0]) / 2, (piece.getCol() + coordinates[1]) / 2);
         }
-        
+
         this.checkerboard.removePiece(piece.getRow(), piece.getCol());
         piece.setRow(coordinates[0]);
         piece.setCol(coordinates[1]);
@@ -260,14 +247,13 @@ public class Game {
 
     /**
      * This method checks if a Pawn is in the opponent's first row and has become king, and replaces it with a king piece
-     * @param pawn The player's pawn
+     * @param piece The player's piece
      */
     public void transformPossibleKing(Piece piece) {
         if (piece.getMarker().equals("\u001B[33mO\u001B[0m") && piece.getRow() == 7 && piece.type().equals("pawn")) {
             this.checkerboard.removePiece(piece.getRow(), piece.getCol());
             this.checkerboard.setPiece(new King(piece.getRow(), piece.getCol(), piece.getMarker()));
-        }
-        else if (piece.getRow() == 0 && piece.type().equals("pawn")) {
+        } else if (piece.getRow() == 0 && piece.type().equals("pawn")) {
             this.checkerboard.removePiece(piece.getRow(), piece.getCol());
             this.checkerboard.setPiece(new King(piece.getRow(), piece.getCol(), piece.getMarker()));
         }
@@ -278,7 +264,7 @@ public class Game {
      * @return If the user wishes to play again
      */
     public boolean replayPrompt() {
-        String replay = "";
+        String replay;
 
         // Repeatedly asks the user to enter "Yes" or "No" until they enter one of the two options
         do {
@@ -287,9 +273,8 @@ public class Game {
             if (!(replay.equalsIgnoreCase("yes") || replay.equalsIgnoreCase("no"))) {
                 System.out.println("Invalid input. Please try again.");
             }
-        } while(!(replay.equalsIgnoreCase("yes") || replay.equalsIgnoreCase("no")));
+        } while (!(replay.equalsIgnoreCase("yes") || replay.equalsIgnoreCase("no")));
 
-        if (replay.equalsIgnoreCase("yes")) return true;
-        return false;
+        return replay.equalsIgnoreCase("yes");
     }
 }
