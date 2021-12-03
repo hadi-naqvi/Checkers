@@ -36,11 +36,11 @@ public class Game {
         // Itereates over every cell and places a new piece/pawn or null
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
-                // Places all of player X's pawns
+                // Places all of player 1's pawns
                 if (row <= 2 && (col - row + 4) % 2 == 0) {
                     this.checkerboard.setPiece(new Pawn(row, col, "\u001B[33mO\u001B[0m"));
                 }
-                // Places all of player O's pawns
+                // Places all of player 2's pawns
                 else if (row >= 5 && (col - row + 7) % 2 == 1) {
                     this.checkerboard.setPiece(new Pawn(row, col, "\u001B[36mO\u001B[0m"));
                 }
