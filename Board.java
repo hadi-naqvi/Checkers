@@ -64,7 +64,7 @@ public class Board {
     public void print() {
         // The corresponding letter labels for each row is stored in an array
         String[] rowLabels = {"A", "B", "C", "D", "E", "F", "G", "H"};
-        
+
         // Labels for each column are printed on-screen to make it easier for the players to make their moves
         System.out.println("   |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |\n----------------------------------------------------");
         for (int row = 0; row < 8; row++) {

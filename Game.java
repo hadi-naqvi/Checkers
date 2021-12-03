@@ -195,7 +195,7 @@ public class Game {
                 } else {
                     System.out.println("You have outstanding jump(s) to make.\n" + "Player " + marker + ", enter the coordinates of the piece you would like to move (Ex. A,5):");
                 }
-                
+
                 // Prompts the user to enter comma separated coordinates
                 String[] input = SCANNER.nextLine().split(",");
                 coordinates[0] = ROWLABELS.get(input[0].toUpperCase()) - 1;
