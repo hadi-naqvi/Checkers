@@ -27,7 +27,7 @@ public abstract class Piece {
     }
 
     /**
-     * This method returns the row number of a piece
+     * This getter method returns the row number of a piece
      * @return The row of the piece
      */
     public int getRow() {
@@ -75,13 +75,13 @@ public abstract class Piece {
     }
 
     /**
-     * This abstract method determines all possible moves that can be made for a piece
+     * This method determines all possible moves that can be made for a piece given its position on the checkerboard
      * @return The list of possible moves that can be made
      */
     public abstract ArrayList<int[]> getPossibleMoves();
 
     /**
-     * This abstract method determines all possible jumps that can be made for a piece
+     * This method determines all possible jumps that can be made for a piece given its position on the checkerboard
      * @return The list of possible jumps that can be made
      */
     public abstract ArrayList<int[][]> getPossibleJumps();

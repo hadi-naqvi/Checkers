@@ -5,27 +5,20 @@
  * Teacher: Mr. Ho
  */
 
-import java.util.HashMap;
-
 public class Board {
-    // The board is a 2D Piece array stored as an attribute of a Board object (Private/Encapsulated attribute with getter/setter methods)
+    // The board is a 2D Piece array stored as an attribute of a Board object
     private Piece[][] board;
-    private static final HashMap<Integer, String> rowLabels = new HashMap<Integer, String>();
 
-    // Constructor method which initializes the board attribute
+    /**
+     * Constructor method which initializes the board attribute
+     */
     public Board() {
         // The dimensions of the 2D array are the same as the dimensions of a checkerboard which is 8x8
         this.board = new Piece[8][8];
-
-        // Populates the rowLabels hashmap with the rows and their corresponding integer values
-        String[] rows = {"A", "B", "C", "D", "E", "F", "G", "H"};
-        for (int i = 0; i < 8; i++) {
-            rowLabels.put(i + 1 , rows[i]);
-        }
     }
 
     /**
-     * This getter method returns the Piece object at a request location on the checkerboard
+     * This getter method returns the Piece object at a requested location on the checkerboard
      *
      * @param row The row of the piece
      * @param col The column of the piece
@@ -69,12 +62,16 @@ public class Board {
      * This method prints the current pieces stored in the 2D board array in a visually appealing manner in the console
      */
     public void print() {
+        // The corresponding letter labels for each row is stored in an array
+        String[] rowLabels = {"A", "B", "C", "D", "E", "F", "G", "H"};
+        
         // Labels for each column are printed on-screen to make it easier for the players to make their moves
         System.out.println("   |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |\n----------------------------------------------------");
         for (int row = 0; row < 8; row++) {
             // Labels for each row are printed on-screen to make it easier for the players to make their moves
-            System.out.print(" " + rowLabels.get((row + 1)) + " |  ");
+            System.out.print(" " + rowLabels[row] + " |  ");
             for (int col = 0; col < 8; col++) {
+                // Empty cells are printed as blank spaces, pieces are printed as their markers, and kings are printed as the symbol 'K'
                 if (this.board[row][col] == null) {
                     System.out.print("   |  ");
                     continue;
