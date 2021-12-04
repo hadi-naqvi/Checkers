@@ -19,7 +19,6 @@ public class Board {
 
     /**
      * This getter method returns the Piece object at a requested location on the checkerboard
-     *
      * @param row The row of the piece
      * @param col The column of the piece
      * @return The piece being requested
@@ -30,7 +29,6 @@ public class Board {
 
     /**
      * This setter method moves a specified piece by changing its location in the 2D board array which stores the pieces
-     *
      * @param piece The piece being moved
      */
     public void setPiece(Piece piece) {
@@ -39,7 +37,6 @@ public class Board {
 
     /**
      * This setter method removes a specified piece on the checkerboard and sets it to null (empty cell)
-     *
      * @param row The row of the piece being removed
      * @param col The column of the piece being removed
      */
@@ -49,7 +46,6 @@ public class Board {
 
     /**
      * This method determines whether a given square/cell on the checkerboard is empty or not
-     *
      * @param row The row of the specified cell/square
      * @param col The column of the specified cell/square
      * @return If the cell is empty
@@ -71,13 +67,14 @@ public class Board {
             // Labels for each row are printed on-screen to make it easier for the players to make their moves
             System.out.print(" " + rowLabels[row] + " |  ");
             for (int col = 0; col < 8; col++) {
-                // Empty cells are printed as blank spaces, pieces are printed as their markers, and kings are printed as the symbol 'K'
                 if (this.board[row][col] == null) {
+                    // An open space is outputted as a blank space indicating a move can be made there
                     System.out.print("   |  ");
-                    continue;
                 } else if (this.getPiece(row, col).type().equals("king")) {
+                    // Kings are ouputted as the letter 'K' with the player's corresponding colour
                     System.out.print(this.board[row][col].getMarker().substring(0, 5) + "K" + "\u001B[0m" + "  |  ");
                 } else {
+                    // Pieces on the board are outputted as their marker (Colour and the symbol O)
                     System.out.print(this.board[row][col].getMarker() + "  |  ");
                 }
             }

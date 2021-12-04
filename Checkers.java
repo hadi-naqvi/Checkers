@@ -13,7 +13,7 @@ public class Checkers {
         // Main program loop
         do {
             // Introductory message
-            System.out.println("Welcome to Checkers!\nInfo/Rules:\n1. You must enter coordinates as (row,column)\n2. Force-jumps are enabled\n3. You can only move diagonally");
+            System.out.println("Welcome to Checkers!\nInfo/Rules:\n1. You must enter coordinates as (row,column)\n2. Forced-jumps are enabled\n3. You can only move diagonally");
 
             // Initialization of key game variables which control if the game is running andwhich player's turn it is
             boolean gameRunning = true;

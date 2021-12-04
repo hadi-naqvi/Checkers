@@ -70,7 +70,9 @@ public class Game {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 // Checks if the opponent can make a move/jump with any of their pieces
-                if (this.checkerboard.getPiece(row, col) != null && !this.checkerboard.getPiece(row, col).getMarker().equals(marker) && (this.canJump(this.checkerboard.getPiece(row, col)) || this.canMove(this.checkerboard.getPiece(row, col)))) {
+                if (this.checkerboard.getPiece(row, col) != null
+                    && !this.checkerboard.getPiece(row, col).getMarker().equals(marker)
+                    && (this.canJump(this.checkerboard.getPiece(row, col)) || this.canMove(this.checkerboard.getPiece(row, col)))) {
                     return false;
                 }
             }
@@ -224,7 +226,7 @@ public class Game {
     }
 
     /**
-     * This method retrieve the position of the move the player wishes to make with their piece
+     * This method retrieve the position of the move the player wishes to make with their piece (get move position)
      * @param piece The piece being moved
      * @return The coordinates of the position the user selected to move their piece to
      */
@@ -236,7 +238,7 @@ public class Game {
         do {
             try {
                 // Prompts the user to enter comma separated coordinates
-                System.out.println("Player " + piece.getMarker() + ", enter the coordinates of the location you would like the piece to move to (Ex. A,5):");
+                System.out.println("Player " + piece.getMarker() + ", enter the coordinates where you want to move your piece: (Ex. A,5):");
                 String[] input = SCANNER.nextLine().split(",");
                 coordinates[0] = ROWLABELS.get(input[0].toUpperCase()) - 1;
                 coordinates[1] = Integer.parseInt(input[1]) - 1;
